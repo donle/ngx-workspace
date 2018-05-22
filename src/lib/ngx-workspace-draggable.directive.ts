@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, ElementRef, Output, EventEmitter, Renderer, ViewChild } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Point } from './interfaces/point';
 import { TileProfile } from './interfaces/tile';
 import { NgxWorkspaceService } from './ngx-workspace.service';
@@ -16,13 +16,11 @@ export class DraggableDirective {
 
   private originalOffset: { left: number, top: number };
   private isMouseDown: boolean;
-  private move: Point;
   private lastPosition: Point;
   private moveTo: Point;
 
   constructor(
     private el: ElementRef,
-    private renderer: Renderer,
     private dataService: NgxWorkspaceDataService<boolean>,
     private dragService: NgxWorkspaceService
   ) {

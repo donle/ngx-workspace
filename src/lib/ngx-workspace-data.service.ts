@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export enum DATA_TYPE {
   ASK_FOR_UNIT_HEIGHT,
@@ -8,15 +8,15 @@ export enum DATA_TYPE {
   ASK_FOR_EXTENDING_WORKBOARD
 }
 
-interface DataModel<T> {
-  type: DATA_TYPE,
-  payload: T
+export interface DataModel<T> {
+  type: DATA_TYPE;
+  payload: T;
 }
 
 @Injectable()
 export class NgxWorkspaceDataService<T> {
   private messageSource = new BehaviorSubject<DataModel<T>>({ type: null, payload: null });
-  public readonly currentMessage = this.messageSource.asObservable();
+  public readonly currentMessage: Observable<DataModel<T>> = this.messageSource.asObservable();
 
   constructor() { }
 

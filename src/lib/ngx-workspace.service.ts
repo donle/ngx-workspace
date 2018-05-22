@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Point } from './interfaces/point';
 import { TileProfile, TileArea } from './interfaces/tile';
 @Injectable()
 export class NgxWorkspaceService {
@@ -29,7 +28,7 @@ export class NgxWorkspaceService {
 
   public tilesOverlappedWithOthers(tiles?: Array<TileProfile>) {
     tiles = tiles || this.tiles;
-    let occupiedTiles = [];
+    let occupiedTiles: Array<number> = [];
 
     for (let i = 0; i < tiles.length; i++) {
       const src_tile = tiles[i];
@@ -82,7 +81,7 @@ export class NgxWorkspaceService {
         }
       };
 
-      if(this.isInsideAreaOf(srcTileArea, area)) return true;
+      if (this.isInsideAreaOf(srcTileArea, area)) return true;
     }
     return false;
   }

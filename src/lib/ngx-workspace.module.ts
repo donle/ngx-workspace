@@ -10,8 +10,8 @@ import { DraggableDirective } from './ngx-workspace-draggable.directive';
     CommonModule
   ],
   declarations: [
-    DragElementComponent, 
-    NgxWorkboardComponent, 
+    DragElementComponent,
+    NgxWorkboardComponent,
     DraggableDirective
   ],
   providers: [

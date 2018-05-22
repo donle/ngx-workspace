@@ -1,13 +1,25 @@
 {
   "name": "ngx-workspace",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "main": "bundle/ngx-workspace.js",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "compile": "npm run lint:code && ngc -p tsconfig.lib.json --pretty",
+    "compile:tsc": "npm run lint && tsc -p tsconfig.json --noUnusedLocals --pretty",
+    "compile:clean": "rimraf ./src/**/*.d.ts && rimraf ./src/**/*.js",
+    "bundle:create": "npm run bundle:clean && npm run rollup && npm run rollup:min",
+    "bundle:clean": "rimraf bundle",
+    "demo": "npm install && npm run demo:install && npm run demo:prepare && npm run demo:start",
+    "lint": "npm run lint:code && npm run lint:test",
+    "lint:code": "tslint ./src/**/*.ts -t verbose --exclude ./src/**/*.d.ts",
+    "lint:test": "tslint ./test/**/*.ts -t verbose --exclude ./test/**/*.d.ts",
+    "prepare": "npm run compile && npm run bundle:create",
+    "pretest": "npm run compile:tsc",
+    "rollup": "rollup -c rollup.conf.js",
+    "rollup:min": "rollup -c rollup-uglify.conf.js"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
   },
   "dependencies": {
     "@angular/animations": "^6.0.2",
@@ -20,6 +32,7 @@
     "@angular/platform-browser-dynamic": "^6.0.2",
     "@angular/router": "^6.0.2",
     "core-js": "^2.5.4",
+    "element-resize-detector": "^1.1.14",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
@@ -29,6 +42,7 @@
     "@angular/cli": "~6.0.3",
     "@angular/compiler-cli": "^6.0.2",
     "@angular/language-service": "^6.0.2",
+    "@types/element-resize-detector": "^1.1.0",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
@@ -42,6 +56,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^2.4.5",
     "protractor": "~5.3.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.59.2",
     "ts-node": "~5.0.1",
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",

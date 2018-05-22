@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, HostListener, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
 import * as elementResizeDetectorMaker from 'element-resize-detector';
 
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
@@ -34,7 +34,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit () {
     this.dataService.currentMessage.subscribe(data => {
-      switch(data.type) {
+      switch (data.type) {
         case DATA_TYPE.ASK_FOR_EDIT_MODE: {
           if (!this.enableEditMode) this.autoBoardHeight();
           return;
@@ -56,7 +56,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
       right: this.boardElement.nativeElement.offsetWidth + this.boardElement.nativeElement.offsetLeft,
       top: this.boardElement.nativeElement.offsetTop,
       bottom: 0
-    }
+    };
 
     this.autoBoardHeight();
     this.boardElement.nativeElement.style.width = '100%';
@@ -100,7 +100,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let tile of this.tiles) {
       if (tile.unitHeight + tile.offsetTopUnit > maxHeightToTop) {
         maxHeightToTop = tile.unitHeight + tile.offsetTopUnit;
-      } 
+      }
     }
     this.boardElement.nativeElement.style.minHeight = (this.unitHeight * maxHeightToTop + 24) + 'px';
   }

@@ -1,4 +1,16 @@
-import { Component, OnInit, Input, OnChanges, ChangeDetectorRef, HostListener, ViewChild, ElementRef, DoCheck, ComponentFactoryResolver, AfterViewInit, ComponentRef, Type, OnDestroy } from '@angular/core';
+import {
+  Component,
+   OnInit,
+   Input,
+   ChangeDetectorRef,
+   ViewChild,
+   ElementRef,
+   DoCheck,
+   ComponentFactoryResolver,
+   AfterViewInit,
+   ComponentRef,
+   OnDestroy
+  } from '@angular/core';
 import { NgxWorkspaceService } from '../ngx-workspace.service';
 import { NgxWidgetLoaderDirective } from '../ngx-widget-loader.directive';
 import { TileProfile } from '../interfaces/tile';
@@ -11,24 +23,17 @@ import { Point } from '../interfaces/point';
   styleUrls: ['./ngx-drag-element.component.scss']
 })
 export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy {
-  @Input('element') tile: TileProfile;
+  @Input('tile') tile: TileProfile;
   @Input('component') widgetComponent: typeof Component;
   @Input('responsiveMode') responsiveMode: boolean;
   @ViewChild('elementRef') elementRef: ElementRef;
   @ViewChild('elementShadow') elementShadow: ElementRef;
   @ViewChild(NgxWidgetLoaderDirective) widgetContainer: NgxWidgetLoaderDirective;
   private componentRef: ComponentRef<Component>;
-  private elementChecked: boolean = false;
-  private dragMessagId: string;
+  private elementChecked = false;
   private unitHeight: number;
-  private dragScale: {
-    left: number,
-    right: number,
-    top: number,
-    bottom: number
-  };
 
-  public enableEditMode: boolean = false;
+  public enableEditMode = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -38,28 +43,27 @@ export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnD
   ) {
     this.unitHeight = 0;
     this.dataService.sendMessage({ type: DATA_TYPE.ASK_FOR_UNIT_HEIGHT, payload: true });
-    this.dataService.sendMessage({ type: DATA_TYPE.ASK_FOR_DRAG_SCALE, payload: true });
   }
 
   ngOnInit() {
     this.dataService.currentMessage.subscribe(data => {
-      switch(data.type) {
-        case DATA_TYPE.ASK_FOR_DRAG_SCALE: this.dragScale = data.payload; return;
+      switch (data.type) {
         case DATA_TYPE.ASK_FOR_EDIT_MODE: this.enableEditMode = data.payload; return;
         case DATA_TYPE.ASK_FOR_UNIT_HEIGHT: this.unitHeight = data.payload; return;
       }
     });
   }
 
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     this.loadApplicationComponent();
     this.elementRef.nativeElement.id = this.tile.name;
   }
 
-  ngDoCheck () {
+  ngDoCheck() {
     if (this.tile.overlapped) {
+      const boxShadow = `0 2px 4px -1px rgba(255,107,107, .2), 0 4px 5px 0 rgba(255,107,107, .14), 0 1px 10px 0 rgba(255,107,107, .12)`;
       this.elementRef.nativeElement.style.border = '2px solid #f44336';
-      this.elementRef.nativeElement.style.boxShadow = '0 2px 4px -1px rgba(255,107,107, .2), 0 4px 5px 0 rgba(255,107,107, .14), 0 1px 10px 0 rgba(255,107,107, .12)';
+      this.elementRef.nativeElement.style.boxShadow = boxShadow;
     } else {
       this.elementRef.nativeElement.style.border = null;
       this.elementRef.nativeElement.style.boxShadow = null;
@@ -74,11 +78,11 @@ export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnD
     if (this.componentRef) this.componentRef.destroy();
   }
 
-  private loadApplicationComponent (appName: string = this.tile.name) {
+  private loadApplicationComponent(appName: string = this.tile.name) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory<Component>(this.widgetComponent);
     let viewContainerRef = this.widgetContainer.viewContainerRef;
     viewContainerRef.clear();
-    
+
     this.componentRef = viewContainerRef.createComponent<Component>(componentFactory);
   }
 
@@ -86,7 +90,7 @@ export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnD
     if (!this.responsiveMode) {
       return {
         width: '100%'
-      }
+      };
     } else {
       return {
         position: 'absolute',
@@ -94,7 +98,7 @@ export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnD
         height: (this.tile.unitHeight * this.unitHeight) + 'px',
         top: (this.tile.offsetTopUnit * this.unitHeight) + 'px',
         left: (this.tile.offsetLeftUnit * this.unitHeight) + 'px'
-      }
+      };
     }
   }
 
@@ -102,7 +106,7 @@ export class DragElementComponent implements OnInit, DoCheck, AfterViewInit, OnD
     return {
       unitHeight: this.unitHeight,
       tile
-    }
+    };
   }
 
   public getPosition(pos: { move: Point, tileName: string }) {
