@@ -1,0 +1,42 @@
+.drag-element {
+  // position: absolute;
+  padding: 4px;
+  box-sizing: border-box;
+  //   border: 1px solid; // display: inline-block;
+  &.editable {
+    cursor: move;
+    user-select: none;
+    .hover-shadow {
+      display: block;
+    }
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  z-index: 9;
+  .hover-shadow {
+    z-index: 999;
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shadow {
+  display: none;
+  background: rgba(0, 21, 59, 0.3);
+  z-index: 8;
+  transition: top 0.2s ease, left 0.2s ease;
+}
+.hide {
+  display: none !important;
+}
+
+#myrisks {
+  background: rgb(115, 215, 255);
+}
+
+#faresearch {
+  background: rgb(115, 215, 255);
+}

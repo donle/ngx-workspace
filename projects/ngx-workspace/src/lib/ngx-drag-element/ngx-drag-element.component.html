@@ -1,0 +1,8 @@
+<div class="drag-element" id="{{tile.name}}" [ngStyle]="getTileStyle" [appDraggable]="enableEditMode" [appProfile]="getAppProfile(tile)"
+ [appShadow]="elementShadow" [appDragScale]="dragScale" [ngClass]="{ 'editable': enableEditMode }" (appPosition)="getPosition($event)"
+  #elementRef>
+  <!-- {{ tile.name }} -->
+  <div class="hover-shadow" [ngClass]="{ 'hide': !responsiveMode }"></div>
+  <div appContent [appTitle]="tile.name"></div>
+</div>
+<div class="shadow" [ngClass]="{ 'hide': !dragScale || !responsiveMode }" [ngStyle]="getTileStyle" #elementShadow></div>

@@ -1,0 +1,5 @@
+<div class="drag-board" #workboard>
+  <!-- <drag-element *ngFor="let tile of tiles" [element]="tile" [unitHeight]="unitHeight" [dragScale]="dragScale" [responsiveMode]="responsiveMode"></drag-element> -->
+  <ng-content></ng-content>
+  <div class="background-grid wrap row flex" #background [ngClass]="{ 'hide': !responsiveMode, 'transparent': !enableEditMode }"></div>
+</div>
