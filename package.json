@@ -1,6 +1,6 @@
 {
   "name": "ngx-workspace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./bundles/ngx-workspace.umd.js",
   "scripts": {
     "compile": "npm run lint:code && ngc -p tsconfig.lib.json --pretty",
@@ -16,6 +16,11 @@
     "pretest": "npm run compile:tsc",
     "rollup": "rollup -c rollup.conf.js",
     "rollup:min": "rollup -c rollup-uglify.conf.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:donle/ngx-workspace.git"
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
