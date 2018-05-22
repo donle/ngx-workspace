@@ -1,7 +1,7 @@
 import { NgxWidgetLoaderDirective } from './ngx-widget-loader.directive';
 import { inject, TestBed } from '@angular/core/testing';
 
-describe('AppDirective', () => {
+describe('NgxWidgetLoaderDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [NgxWidgetLoaderDirective]
