@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
-import * as elementResizeDetectorMaker from 'element-resize-detector';
+import elementResizeDetectorMaker from 'element-resize-detector';
 
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
 import { TileProfile } from '../interfaces/tile';

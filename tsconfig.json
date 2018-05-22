@@ -1,12 +1,13 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-      "outDir": "./bundle",
+      "outDir": "./out-lib",
       "sourceMap": true,
       "declaration": false,
       "moduleResolution": "node",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
       "target": "es5",
       "module": "es2015",
       "typeRoots": [
