@@ -1,8 +1,8 @@
-<div class="drag-element" id="{{tile.name}}" [ngStyle]="getTileStyle" [appDraggable]="enableEditMode" [appProfile]="getAppProfile(tile)"
- [appShadow]="elementShadow" [appDragScale]="dragScale" [ngClass]="{ 'editable': enableEditMode }" (appPosition)="getPosition($event)"
+<div class="drag-element" id="{{widget.name}}" [ngStyle]="getWidgetStyle" [widgetDraggable]="enableEditMode" [ws-widget-profile]="getAppProfile(widget)"
+ [ws-widget-shadow]="elementShadow" [ws-drag-scale]="dragScale" [ngClass]="{ 'editable': enableEditMode }" (ws-widget-position)="getPosition($event)"
   #elementRef>
-  <!-- {{ tile.name }} -->
+  <!-- {{ widget.name }} -->
   <div class="hover-shadow" [ngClass]="{ 'hide': !responsiveMode }"></div>
-  <div appContent [appTitle]="tile.name"></div>
+  <div ngx-workspace-loader></div>
 </div>
-<div class="shadow" [ngClass]="{ 'hide': !dragScale || !responsiveMode }" [ngStyle]="getTileStyle" #elementShadow></div>
+<div class="shadow" [ngClass]="{ 'hide': !dragScale || !responsiveMode }" [ngStyle]="getWidgetStyle" #elementShadow></div>

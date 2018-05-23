@@ -1,87 +1,87 @@
 import { Injectable } from '@angular/core';
-import { TileProfile, TileArea } from './interfaces/tile';
+import { WidgetProfile, WidgetArea } from './interfaces/widget';
 @Injectable()
 export class NgxWorkspaceService {
-  private tiles: Array<TileProfile>;
+  private widgets: Array<WidgetProfile>;
   constructor() {
-    this.tiles = [];
+    this.widgets = [];
   }
 
-  private initTileOptions (tile: TileProfile) {
-    if (tile.overlapped === undefined) tile.overlapped = false;
-    if (tile.highlighted === undefined) tile.highlighted = false;
+  private initWidgetOptions (widget: WidgetProfile) {
+    if (widget.overlapped === undefined) widget.overlapped = false;
+    if (widget.highlighted === undefined) widget.highlighted = false;
   }
 
-  public get Tiles() {
-    return this.tiles;
+  public get Widgets() {
+    return this.widgets;
   }
 
-  public add(tile: TileProfile) {
-    this.initTileOptions(tile);
-    this.tiles.push(tile);
+  public add(widget: WidgetProfile) {
+    this.initWidgetOptions(widget);
+    this.widgets.push(widget);
   }
 
-  public remove(tile: TileProfile) {
-    let index = this.tiles.findIndex(_tile => tile.name === _tile.name);
-    if (index >= 0) this.tiles.splice(index, 1);
+  public remove(widget: WidgetProfile) {
+    let index = this.widgets.findIndex(_widget => widget.name === _widget.name);
+    if (index >= 0) this.widgets.splice(index, 1);
   }
 
-  public tilesOverlappedWithOthers(tiles?: Array<TileProfile>) {
-    tiles = tiles || this.tiles;
-    let occupiedTiles: Array<number> = [];
+  public widgetsOverlappedWithOthers(widgets?: Array<WidgetProfile>) {
+    widgets = widgets || this.widgets;
+    let occupiedWidgets: Array<number> = [];
 
-    for (let i = 0; i < tiles.length; i++) {
-      const src_tile = tiles[i];
-      for (let j = i + 1; j < tiles.length; j++) {
-        const dest_tile = tiles[j];
-        const srcTileArea: TileArea = {
+    for (let i = 0; i < widgets.length; i++) {
+      const src_widget = widgets[i];
+      for (let j = i + 1; j < widgets.length; j++) {
+        const dest_widget = widgets[j];
+        const srcWidgetArea: WidgetArea = {
           begin: {
-            X: src_tile.offsetLeftUnit,
-            Y: src_tile.offsetTopUnit
+            X: src_widget.offsetLeftUnit,
+            Y: src_widget.offsetTopUnit
           },
           end: {
-            X: src_tile.offsetLeftUnit + src_tile.unitWidth,
-            Y: src_tile.offsetTopUnit + src_tile.unitHeight
+            X: src_widget.offsetLeftUnit + src_widget.unitWidth,
+            Y: src_widget.offsetTopUnit + src_widget.unitHeight
           }
         };
-        let destTileArea: TileArea = {
+        let destWidgetArea: WidgetArea = {
           begin: {
-            X: dest_tile.offsetLeftUnit,
-            Y: dest_tile.offsetTopUnit
+            X: dest_widget.offsetLeftUnit,
+            Y: dest_widget.offsetTopUnit
           },
           end: {
-            X: dest_tile.offsetLeftUnit + dest_tile.unitWidth,
-            Y: dest_tile.offsetTopUnit + dest_tile.unitHeight
+            X: dest_widget.offsetLeftUnit + dest_widget.unitWidth,
+            Y: dest_widget.offsetTopUnit + dest_widget.unitHeight
           }
         };
-        if (this.isInsideAreaOf(destTileArea, srcTileArea)) {
-          if (!occupiedTiles.includes(i)) occupiedTiles.push(i);
-          occupiedTiles.push(j);
+        if (this.isInsideAreaOf(destWidgetArea, srcWidgetArea)) {
+          if (!occupiedWidgets.includes(i)) occupiedWidgets.push(i);
+          occupiedWidgets.push(j);
         }
       }
     }
-    return occupiedTiles;
+    return occupiedWidgets;
   }
 
-  private isInsideAreaOf(origin: TileArea, target: TileArea): boolean {
+  private isInsideAreaOf(origin: WidgetArea, target: WidgetArea): boolean {
     return target.end.X > origin.begin.X && target.begin.X < origin.end.X && target.end.Y > origin.begin.Y && target.begin.Y < origin.end.Y;
   }
 
-  public isShadowCoveredOnTiles(tilename: string, area: TileArea): boolean {
-    for (let tile of this.tiles) {
-      if (tile.name === tilename) continue;
-      const srcTileArea: TileArea = {
+  public isShadowCoveredOnWidgets(widgetname: string, area: WidgetArea): boolean {
+    for (let widget of this.widgets) {
+      if (widget.name === widgetname) continue;
+      const srcWidgetArea: WidgetArea = {
         begin: {
-          X: tile.offsetLeftUnit,
-          Y: tile.offsetTopUnit
+          X: widget.offsetLeftUnit,
+          Y: widget.offsetTopUnit
         },
         end: {
-          X: tile.offsetLeftUnit + tile.unitWidth,
-          Y: tile.offsetTopUnit + tile.unitHeight
+          X: widget.offsetLeftUnit + widget.unitWidth,
+          Y: widget.offsetTopUnit + widget.unitHeight
         }
       };
 
-      if (this.isInsideAreaOf(srcTileArea, area)) return true;
+      if (this.isInsideAreaOf(srcWidgetArea, area)) return true;
     }
     return false;
   }

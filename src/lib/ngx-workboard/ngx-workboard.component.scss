@@ -41,3 +41,17 @@ drag-element {
   height: 100%;
   position: absolute;
 }
+
+:host ::ng-deep {
+  .ngx-workspace-row {
+    display: flex;
+    &.ngx-workspace-wrap {
+      flex-wrap: wrap;
+    }
+    >.ngx-workspace-flex {
+      display: flex;
+      box-sizing: border-box;
+      padding: 2px;
+    }
+  }
+}

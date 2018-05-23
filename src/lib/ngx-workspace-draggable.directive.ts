@@ -1,18 +1,18 @@
 import { Directive, Input, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Point } from './interfaces/point';
-import { TileProfile } from './interfaces/tile';
+import { WidgetProfile } from './interfaces/widget';
 import { NgxWorkspaceService } from './ngx-workspace.service';
 import { NgxWorkspaceDataService, DATA_TYPE } from './ngx-workspace-data.service';
 
 @Directive({
-  selector: '[appDraggable]'
+  selector: '[widgetDraggable]'
 })
-export class DraggableDirective {
-  @Input() public appDraggable: boolean;
-  @Input('appDragScale') public draggableScale: { top: number, left: number, right: number, botton: number };
-  @Input('appProfile') public appProfile: { tile: TileProfile, unitHeight: number };
-  @Input('appShadow') public appShadowElement: any;
-  @Output('appPosition') public appPosition: EventEmitter<{ move: Point, tileName: string }>;
+export class NgxWidgetDraggableDirective {
+  @Input() public widgetDraggable: boolean;
+  @Input('ws-drag-scale') public draggableScale: { top: number, left: number, right: number, botton: number };
+  @Input('ws-widget-profile') public widgetProfile: { widget: WidgetProfile, unitHeight: number };
+  @Input('ws-widget-shadow') public widgetShadow: any;
+  @Output('ws-widget-position') public widgetPosition: EventEmitter<{ move: Point, widgetName: string }>;
 
   private originalOffset: { left: number, top: number };
   private isMouseDown: boolean;
@@ -26,12 +26,12 @@ export class DraggableDirective {
   ) {
     this.isMouseDown = false;
     this.lastPosition = null;
-    this.appPosition = new EventEmitter<{ move: Point, tileName: string }>();
+    this.widgetPosition = new EventEmitter<{ move: Point, widgetName: string }>();
     this.moveTo = null;
   }
 
   @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
-    if (!this.appDraggable) return;
+    if (!this.widgetDraggable) return;
 
     this.el.nativeElement.style.zIndex = 9999;
     this.el.nativeElement.style.borderLeft = 'thick solid #0000FF';
@@ -44,16 +44,16 @@ export class DraggableDirective {
       left: this.el.nativeElement.offsetLeft || 0,
       top: this.el.nativeElement.offsetTop || 0
     };
-    this.appShadowElement.style.display = 'block';
+    this.widgetShadow.style.display = 'block';
   }
 
   @HostListener('mouseup') onMouseUp() {
     if (!this.isMouseDown) return;
     this.el.nativeElement.style.border = null;
-    this.appPosition.emit(
+    this.widgetPosition.emit(
       {
         move: this.moveTo,
-        tileName: this.appProfile.tile.name
+        widgetName: this.widgetProfile.widget.name
       });
     this.dragElementTo(this.moveTo);
     this.moveTo = null;
@@ -63,10 +63,10 @@ export class DraggableDirective {
 
   @HostListener('mouseleave') onMouseLeave() {
     if (this.isMouseDown) {
-      this.appPosition.emit(
+      this.widgetPosition.emit(
         {
           move: this.moveTo,
-          tileName: this.appProfile.tile.name
+          widgetName: this.widgetProfile.widget.name
         });
       this.dragElementTo(this.moveTo);
       this.moveTo = null;
@@ -76,7 +76,7 @@ export class DraggableDirective {
   }
 
   @HostListener('mousemove', ['$event']) onMouseMove(evt: MouseEvent) {
-    if (!this.appDraggable || !this.isMouseDown) return;
+    if (!this.widgetDraggable || !this.isMouseDown) return;
 
     this.moveTo = {
       X: evt.clientX - this.lastPosition.X,
@@ -90,26 +90,26 @@ export class DraggableDirective {
     this.dragElementTo(this.moveTo);
 
     let shadowMovesTo = {
-      X: Math.round(this.moveTo.X / this.appProfile.unitHeight),
-      Y: Math.round(this.moveTo.Y / this.appProfile.unitHeight)
+      X: Math.round(this.moveTo.X / this.widgetProfile.unitHeight),
+      Y: Math.round(this.moveTo.Y / this.widgetProfile.unitHeight)
     };
     this.moveElementShadowToByUnits(shadowMovesTo);
-    const isOverlapped = this.dragService.isShadowCoveredOnTiles(this.appProfile.tile.name, {
+    const isOverlapped = this.dragService.isShadowCoveredOnWidgets(this.widgetProfile.widget.name, {
       begin: shadowMovesTo,
       end: {
-        X: shadowMovesTo.X + this.appProfile.tile.unitWidth,
-        Y: shadowMovesTo.Y + this.appProfile.tile.unitHeight
+        X: shadowMovesTo.X + this.widgetProfile.widget.unitWidth,
+        Y: shadowMovesTo.Y + this.widgetProfile.widget.unitHeight
       }
     });
     if (isOverlapped) {
-      this.appShadowElement.style.background = 'rgba(255, 50, 0, 0.5)';
+      this.widgetShadow.style.background = 'rgba(255, 50, 0, 0.5)';
     } else {
-      this.appShadowElement.style.background = 'rgba(0, 21, 59, 0.3)';
+      this.widgetShadow.style.background = 'rgba(0, 21, 59, 0.3)';
     }
 
     const board = document.querySelector('.drag-board');
     const distanceToBottom = board.clientHeight - this.el.nativeElement.offsetHeight - this.el.nativeElement.offsetTop;
-    if (-distanceToBottom >= this.appProfile.unitHeight / 2) this.dataService.sendMessage({
+    if (-distanceToBottom >= this.widgetProfile.unitHeight / 2) this.dataService.sendMessage({
       type: DATA_TYPE.ASK_FOR_EXTENDING_WORKBOARD,
       payload: true
     });
@@ -123,12 +123,12 @@ export class DraggableDirective {
 
   private moveElementShadowToByUnits(point: Point) {
     if (!point) return;
-    this.appShadowElement.style.top = (point.Y * this.appProfile.unitHeight) + 'px';
-    this.appShadowElement.style.left = (point.X * this.appProfile.unitHeight) + 'px';
+    this.widgetShadow.style.top = (point.Y * this.widgetProfile.unitHeight) + 'px';
+    this.widgetShadow.style.left = (point.X * this.widgetProfile.unitHeight) + 'px';
   }
 
   private resetPosition() {
     this.el.nativeElement.style.zIndex = null;
-    this.appShadowElement.style.display = null;
+    this.widgetShadow.style.display = null;
   }
 }

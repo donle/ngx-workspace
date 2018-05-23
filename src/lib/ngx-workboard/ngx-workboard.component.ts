@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
-import elementResizeDetectorMaker from 'element-resize-detector';
+import * as elementResizeDetectorMaker from 'element-resize-detector';
 
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
-import { TileProfile } from '../interfaces/tile';
+import { WidgetProfile } from '../interfaces/widget';
 
 @Component({
   selector: 'ngx-workboard',
@@ -13,23 +13,25 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private workspaceResizeDetector: elementResizeDetectorMaker.Erd;
   private unitHeight: number;
   public responsiveMode: boolean;
-  public enableEditMode: boolean;
   public dragScale: {
     left: number,
     right: number,
     top: number,
     bottom: number
   };
-  @Input('widgets') public tiles: Array<TileProfile>;
-  @Input('screenMinWidth') public responsiveMinimalWidth: number;
+  @Input('widgets') public widgets: Array<WidgetProfile>;
+  @Input('edit') public enableEditMode: boolean;
+  @Input('responsive') public enableResponsive: boolean;
+  @Input('responsive-scale') public responsiveMinimalWidth: number;
   @ViewChild('workboard') private boardElement: ElementRef;
   @ViewChild('background') private backgroundRef: ElementRef;
   constructor(
     private cdr: ChangeDetectorRef,
-    private dataService: NgxWorkspaceDataService<boolean>
+    private dataService: NgxWorkspaceDataService<any>
   ) {
     this.unitHeight = 0;
     this.responsiveMode = true;
+    this.enableResponsive = true;
   }
 
   ngOnInit () {
@@ -48,7 +50,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (window.innerWidth < this.responsiveMinimalWidth) this.responsiveMode = false;
+    if (window.innerWidth < this.responsiveMinimalWidth || !this.enableResponsive) this.responsiveMode = false;
 
     this.unitHeight = this.boardElement.nativeElement.offsetWidth / 12;
     this.dragScale = {
@@ -77,7 +79,6 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.workspaceResizeDetector.removeAllListeners(this.boardElement.nativeElement);
   }
 
-  // @HostListener('window:resize') onWindowResize() {
   private onWindowResize() {
     if (window.innerWidth < this.responsiveMinimalWidth) {
       this.responsiveMode = false;
@@ -97,9 +98,9 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private autoBoardHeight () {
     let maxHeightToTop = 0;
-    for (let tile of this.tiles) {
-      if (tile.unitHeight + tile.offsetTopUnit > maxHeightToTop) {
-        maxHeightToTop = tile.unitHeight + tile.offsetTopUnit;
+    for (let widget of this.widgets) {
+      if (widget.unitHeight + widget.offsetTopUnit > maxHeightToTop) {
+        maxHeightToTop = widget.unitHeight + widget.offsetTopUnit;
       }
     }
     this.boardElement.nativeElement.style.minHeight = (this.unitHeight * maxHeightToTop + 24) + 'px';
@@ -111,8 +112,6 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
       grid.style.height = this.unitHeight + 'px';
       grid.style.width = this.unitHeight + 'px';
     }
-    // let unitsOfNewGrid = Math.round(this.boardElement.nativeElement.offsetHeight / this.unitHeight + 0.49) * 12 - grids.length;
-    // this.updateGrids(unitsOfNewGrid);
   }
 
   private updateGrids (num: number) {
