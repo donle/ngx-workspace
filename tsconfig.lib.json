@@ -4,6 +4,9 @@
     "skipMetadataEmit": false,
     "skipTemplateCodegen": true
   },
+  "compilerOptions": {
+    "declaration": false
+  },
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
