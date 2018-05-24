@@ -1,8 +1,8 @@
-drag-element {
+ngx-drag-element {
   z-index: 9;
 }
 
-.background-grid {
+.ngx-workspace-background-grid {
   z-index: 1;
   background: rgba(223, 223, 223, 0.5);
   position: absolute;
@@ -14,13 +14,13 @@ drag-element {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
   overflow: hidden;
-  &.transparent {
+  &.ngx-workspace-transparent {
     opacity: 0;
   }
-  &.hide {
+  &.ngx-workspace-hide {
     display: none;
   }
-  ::ng-deep .grid {
+  ::ng-deep .ngx-workspace-grid {
     display: inline-block;
     padding: 1px;
     display: flex;
@@ -33,15 +33,6 @@ drag-element {
     }
   }
 }
-.multi-select-hot-area {
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
 :host ::ng-deep {
   .ngx-workspace-row {
     display: flex;

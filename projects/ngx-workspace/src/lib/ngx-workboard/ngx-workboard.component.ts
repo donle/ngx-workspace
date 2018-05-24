@@ -107,7 +107,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private updateGridSize () {
-    let grids = this.backgroundRef.nativeElement.querySelectorAll('.grid');
+    let grids = this.backgroundRef.nativeElement.querySelectorAll('.ngx-workspace-grid');
     for (let grid of grids) {
       grid.style.height = this.unitHeight + 'px';
       grid.style.width = this.unitHeight + 'px';
@@ -116,13 +116,13 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private updateGrids (num: number) {
     if (num < 0) {
-      let currentGrids = this.backgroundRef.nativeElement.querySelectorAll('.grid');
+      let currentGrids = this.backgroundRef.nativeElement.querySelectorAll('.ngx-workspace-grid');
       for (let i = 0; i < -num; i++) {
         currentGrids[i].remove();
       }
     } else {
       const grid = document.createElement('li');
-      grid.className += 'grid';
+      grid.className += 'ngx-workspace-grid';
       grid.style.height = this.unitHeight + 'px';
       grid.style.width = this.unitHeight + 'px';
       grid.innerHTML = '<span></span>';
