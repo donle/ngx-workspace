@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[ngx-workspace-loader]'
+  selector: '[wsWorkspaceLoader]'
 })
 export class NgxWidgetLoaderDirective {
   constructor(

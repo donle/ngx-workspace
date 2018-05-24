@@ -10,7 +10,8 @@ import {
   MatInputModule,
   MatFormFieldModule
 } from '@angular/material';
-import { NgxWorkspaceModule } from 'ngx-workspace';
+// import { NgxWorkspaceModule } from 'ngx-workspace';
+import { NgxWorkspaceModule } from '../../../dist/ngx-workspace';
 
 import { AppComponent } from './app.component';
 import { WidgetAComponent } from './widget-a/widget-a.component';

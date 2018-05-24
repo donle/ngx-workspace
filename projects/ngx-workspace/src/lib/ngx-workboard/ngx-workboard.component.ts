@@ -1,4 +1,16 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  Input,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  AfterContentInit
+} from '@angular/core';
 import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
 // const elementResizeDetectorMaker = require('element-resize-detector');
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
@@ -36,7 +48,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     this.enableResponsive = true;
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.dataService.currentMessage.subscribe(data => {
       switch (data.type) {
         case DATA_TYPE.ASK_FOR_EDIT_MODE: {
@@ -51,10 +63,10 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     });
   }
 
-  ngOnChanges (changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes.responsiveMinimalWidth) {
       if (window.innerWidth < this.responsiveMinimalWidth) this.responsiveMode = false;
-    } 
+    }
     if (changes.widgets) {
       this.dragService.sync(this.widgets);
     }
@@ -85,11 +97,11 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     });
   }
 
-  ngAfterContentInit () {
+  ngAfterContentInit() {
     this.dragService.add(this.widgets);
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.enableEditMode = false;
     this.workspaceResizeDetector.removeAllListeners(this.boardElement.nativeElement);
   }
@@ -111,7 +123,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     this.cdr.detectChanges();
   }
 
-  private autoBoardHeight () {
+  private autoBoardHeight() {
     let maxHeightToTop = 0;
     for (let widget of this.widgets) {
       if (widget.unitHeight + widget.offsetTopUnit > maxHeightToTop) {
@@ -121,7 +133,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     this.boardElement.nativeElement.style.minHeight = (this.unitHeight * maxHeightToTop + 24) + 'px';
   }
 
-  private updateGridSize () {
+  private updateGridSize() {
     let grids = this.backgroundRef.nativeElement.querySelectorAll('.ngx-workspace-grid');
     for (let grid of grids) {
       grid.style.height = this.unitHeight + 'px';
@@ -129,7 +141,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     }
   }
 
-  private updateGrids (num: number) {
+  private updateGrids(num: number) {
     if (num < 0) {
       let currentGrids = this.backgroundRef.nativeElement.querySelectorAll('.ngx-workspace-grid');
       for (let i = 0; i < -num; i++) {
@@ -147,7 +159,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     }
   }
 
-  private extendDragboard () {
+  private extendDragboard() {
     const newHeight = this.boardElement.nativeElement.offsetHeight + this.unitHeight * 4;
     this.boardElement.nativeElement.style.minHeight = newHeight + 'px';
     this.updateGrids(48);

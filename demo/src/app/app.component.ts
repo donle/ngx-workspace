@@ -36,9 +36,9 @@ export class AppComponent {
       component: WidgetCComponent
     },
   ];
-  public editable: boolean = false;
-  public responsiveScale: number = 768;
-  public responsive: boolean = true;
+  public editable = false;
+  public responsiveScale = 768;
+  public responsive = true;
   public displayWidgets: WidgetProfile[];
 
   public widgetsControl = [
@@ -65,9 +65,9 @@ export class AppComponent {
 
   private checkWidgetsStatus () {
     this.displayWidgets = [];
-    for (let widget of this.widgetsControl) {
+    for (const widget of this.widgetsControl) {
       if (widget.enabled) {
-        let result = this.originalWidgets.find(w => w.name === widget.name);
+        const result = this.originalWidgets.find(w => w.name === widget.name);
         this.displayWidgets.push(result);
       }
     }
