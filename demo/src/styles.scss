@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+body {
+    margin: 0;
+    .layout {
+        display: flex !important;
+    }
+    .wrap {
+        flex-wrap: wrap;
+    }
+    .flex1 {
+        max-width: 8.33333333%;
+        flex: 0 0 8.33333333%;
+    }
+    .flex2 {
+        max-width: 16.66666667%;
+        flex: 0 0 16.66666667%;
+    }
+    .flex3 {
+        max-width: 25%;
+        flex: 0 0 25%;
+    }
+    .flex4 {
+        max-width: 33.33333333%;
+        flex: 0 0 33.33333333%;
+    }
+    .flex5 {
+        max-width: 41.66666667%;
+        flex: 0 0 41.66666667%;
+    }
+    .flex6 {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+    .flex7 {
+        max-width: 58.33333333%;
+        flex: 0 0 58.33333333%;
+    }
+    .flex8 {
+        max-width: 66.66666667%;
+        flex: 0 0 66.66666667%;
+    }
+    .flex9 {
+        max-width: 75%;
+        flex: 0 0 75%;
+    }
+    .flex10 {
+        max-width: 83.33333333%;
+        flex: 0 0 83.33333333%;
+    }
+    .flex11 {
+        max-width: 91.66666667%;
+        flex: 0 0 91.66666667%;
+    }
+    .flex12 {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+}

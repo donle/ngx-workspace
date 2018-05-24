@@ -4,7 +4,7 @@ Workspace is a whiteboard for users to customise the location of each widget/app
 
 # Demo 
 
-Developing...
+[Here](https://donle.github.io/ngx-workspace/)
 
 # How to use
 

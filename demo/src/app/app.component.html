@@ -1,0 +1,26 @@
+<nav class="header mat-elevation-z2" [ngStyle]="{ padding: '0 16px' }">
+  <span class="title">Ngx-workspace Demo</span>
+  <span class="spacer"></span>
+  <a mat-icon-button href="https://github.com/donle/ngx-workspace">
+    <i class="fa fa-github" [style.fontSize.px]="24"></i>
+  </a>
+</nav>
+<div class="layout border-box" [style.padding.px]="16">
+  <div class="flex8 border-box" [style.padding.px]="8">
+    <ngx-workboard [widgets]="displayWidgets" [responsive]="responsive" [responsive-scale]="responsiveScale" [edit]="editable"></ngx-workboard>
+  </div>
+  <div class="flex4 border-box" [style.padding.px]="8">
+    <div class="layout wrap border-box options">
+      <mat-checkbox class="flex12" [(ngModel)]="editable">Edit</mat-checkbox>
+      <mat-checkbox class="flex12" [(ngModel)]="responsive">Responsive</mat-checkbox>
+      <mat-form-field>
+        <input matInput placeholder="Responsive Scale" [(ngModel)]="responsiveScale" />
+      </mat-form-field>
+
+      <div class="flex12 layout wrap">
+        <span class="flex12 widget-title" [style.padding.px]="8">Widgets</span>
+        <mat-checkbox class="flex4" *ngFor="let widget of widgetsControl" [(ngModel)]="widget.enabled" (change)="checkWidget($event)">{{widget.Title}}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>

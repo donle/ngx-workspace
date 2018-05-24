@@ -1,0 +1,27 @@
+.header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    background: #3f51b5;
+    color: white;
+    .title {
+        font-weight: 500;
+        font-size: 20px;
+    }
+}
+.options {
+    &>.flex12{
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .widget-title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+.spacer {
+    flex: auto;
+}
+.border-box {
+    box-sizing: border-box;
+}
