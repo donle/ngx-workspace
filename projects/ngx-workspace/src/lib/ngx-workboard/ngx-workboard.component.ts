@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
-import * as elementResizeDetectorMaker from 'element-resize-detector';
-
+import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
+// const elementResizeDetectorMaker = require('element-resize-detector');
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
 import { WidgetProfile } from '../interfaces/widget';
 
@@ -10,8 +10,8 @@ import { WidgetProfile } from '../interfaces/widget';
   styleUrls: ['./ngx-workboard.component.scss']
 })
 export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  private workspaceResizeDetector: elementResizeDetectorMaker.Erd;
-  private unitHeight: number;
+  private workspaceResizeDetector: Erd;
+  public unitHeight: number;
   public responsiveMode: boolean;
   public dragScale: {
     left: number,
