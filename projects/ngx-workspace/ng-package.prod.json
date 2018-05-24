@@ -3,5 +3,9 @@
   "dest": "../../dist/ngx-workspace",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "element-resize-detector",
+    "@types/element-resize-detector"
+  ]
 }
