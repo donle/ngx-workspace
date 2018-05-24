@@ -1,15 +1,16 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, AfterContentInit } from '@angular/core';
 import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
 // const elementResizeDetectorMaker = require('element-resize-detector');
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
 import { WidgetProfile } from '../interfaces/widget';
+import { NgxWorkspaceService } from '../ngx-workspace.service';
 
 @Component({
   selector: 'ngx-workboard',
   templateUrl: './ngx-workboard.component.html',
   styleUrls: ['./ngx-workboard.component.scss']
 })
-export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy, AfterContentInit {
   private workspaceResizeDetector: Erd;
   public unitHeight: number;
   public responsiveMode: boolean;
@@ -27,7 +28,8 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('background') private backgroundRef: ElementRef;
   constructor(
     private cdr: ChangeDetectorRef,
-    private dataService: NgxWorkspaceDataService<any>
+    private dataService: NgxWorkspaceDataService<any>,
+    private dragService: NgxWorkspaceService
   ) {
     this.unitHeight = 0;
     this.responsiveMode = true;
@@ -47,6 +49,15 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
+  }
+
+  ngOnChanges (changes: SimpleChanges) {
+    if (changes.responsiveMinimalWidth) {
+      if (window.innerWidth < this.responsiveMinimalWidth) this.responsiveMode = false;
+    } 
+    if (changes.widgets) {
+      this.dragService.sync(this.widgets);
+    }
   }
 
   ngAfterViewInit() {
@@ -72,6 +83,10 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.workspaceResizeDetector.listenTo(this.boardElement.nativeElement, element => {
       this.onWindowResize();
     });
+  }
+
+  ngAfterContentInit () {
+    this.dragService.add(this.widgets);
   }
 
   ngOnDestroy () {

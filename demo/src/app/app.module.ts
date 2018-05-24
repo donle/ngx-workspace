@@ -2,7 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatSlideToggleModule,
+  MatInputModule,
+  MatFormFieldModule
+} from '@angular/material';
 import { NgxWorkspaceModule } from 'ngx-workspace';
 
 import { AppComponent } from './app.component';

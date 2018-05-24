@@ -1,4 +1,4 @@
-<div class="ngx-workspace-drag-element" id="{{widget.name}}" [ngStyle]="getWidgetStyle" [widgetDraggable]="enableEditMode" [ws-widget-profile]="getAppProfile(widget)"
+<div class="ngx-workspace-drag-element" id="{{widget.name}}" [ngStyle]="getWidgetStyle" [wsWidgetDraggable]="enableEditMode" [ws-widget-profile]="getAppProfile(widget)"
  [ws-widget-shadow]="elementShadow" [ws-drag-scale]="dragScale" [ngClass]="{ 'ngx-workspace-editable': enableEditMode }" (ws-widget-position)="getPosition($event)"
   #elementRef>
   <!-- {{ widget.name }} -->

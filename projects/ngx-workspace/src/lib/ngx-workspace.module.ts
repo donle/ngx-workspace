@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgxDragElementComponent } from './ngx-drag-element/ngx-drag-element.component';
 import { NgxWorkboardComponent } from './ngx-workboard/ngx-workboard.component';
 import { NgxWorkspaceService } from './ngx-workspace.service';
-import { NgxWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
+import { WsWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
 import { NgxWorkspaceDataService } from './ngx-workspace-data.service';
 import { NgxWidgetLoaderDirective } from './ngx-widget-loader.directive';
 
@@ -14,7 +14,7 @@ import { NgxWidgetLoaderDirective } from './ngx-widget-loader.directive';
   declarations: [
     NgxDragElementComponent,
     NgxWorkboardComponent,
-    NgxWidgetDraggableDirective,
+    WsWidgetDraggableDirective,
     NgxWidgetLoaderDirective
   ],
   providers: [

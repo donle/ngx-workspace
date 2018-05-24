@@ -1,14 +1,14 @@
-import { NgxWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
+import { WsWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
 import { inject, TestBed } from '@angular/core/testing';
 
-describe('NgxWidgetDraggableDirective', () => {
+describe('WsWidgetDraggableDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NgxWidgetDraggableDirective]
+      declarations: [WsWidgetDraggableDirective]
     });
   });
 
-  it('should create an instance', inject([NgxWidgetDraggableDirective], (directive: NgxWidgetDraggableDirective) => {
+  it('should create an instance', inject([WsWidgetDraggableDirective], (directive: WsWidgetDraggableDirective) => {
     expect(directive).toBeTruthy();
   }));
 });

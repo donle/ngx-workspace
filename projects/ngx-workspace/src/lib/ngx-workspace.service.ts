@@ -16,9 +16,18 @@ export class NgxWorkspaceService {
     return this.widgets;
   }
 
-  public add(widget: WidgetProfile) {
-    this.initWidgetOptions(widget);
-    this.widgets.push(widget);
+  public add (widgets: WidgetProfile | Array<WidgetProfile>) {
+    if (!(widgets instanceof Array)) widgets = [widgets];
+    for (let widget of widgets) {
+      this.initWidgetOptions(widget);
+      this.widgets.push(widget);
+    }
+  }
+
+  public sync(widgets: Array<WidgetProfile>) {
+    this.widgets = this.widgets.filter(widget => widgets.find(newWidget => newWidget.name === widget.name));
+    const newWidgets = widgets.filter(newWidget => this.widgets.find(widget => widget.name !== newWidget.name));
+    this.widgets = this.widgets.concat(newWidgets);
   }
 
   public remove(widget: WidgetProfile) {
@@ -28,7 +37,16 @@ export class NgxWorkspaceService {
 
   public widgetsOverlappedWithOthers(widgets?: Array<WidgetProfile>) {
     widgets = widgets || this.widgets;
-    let occupiedWidgets: Array<number> = [];
+    let occupiedWidgets: Array<{
+      index: number,
+      overlapped: boolean
+    }> = [];
+    for (let i = 0; i < widgets.length; i++) {
+      occupiedWidgets.push({
+        index: i,
+        overlapped: false
+      });
+    }
 
     for (let i = 0; i < widgets.length; i++) {
       const src_widget = widgets[i];
@@ -54,9 +72,13 @@ export class NgxWorkspaceService {
             Y: dest_widget.offsetTopUnit + dest_widget.unitHeight
           }
         };
+
+        const hoveredWidget = occupiedWidgets.find(widget => widget.index === j);
         if (this.isInsideAreaOf(destWidgetArea, srcWidgetArea)) {
-          if (!occupiedWidgets.includes(i)) occupiedWidgets.push(i);
-          occupiedWidgets.push(j);
+          occupiedWidgets.find(widget => widget.index === i).overlapped = true;
+          hoveredWidget.overlapped = true;
+        } else {
+          hoveredWidget.overlapped = false;
         }
       }
     }

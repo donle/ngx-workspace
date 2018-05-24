@@ -38,7 +38,7 @@ export class NgxDragElementComponent implements OnInit, DoCheck, AfterViewInit, 
   @ViewChild('elementShadow') elementShadow: ElementRef;
   @ViewChild(NgxWidgetLoaderDirective) widgetContainer: NgxWidgetLoaderDirective;
   private componentRef: ComponentRef<Component>;
-  private elementChecked = false;
+  // private elementChecked = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -66,10 +66,10 @@ export class NgxDragElementComponent implements OnInit, DoCheck, AfterViewInit, 
       this.elementRef.nativeElement.style.border = null;
       this.elementRef.nativeElement.style.boxShadow = null;
     }
-    if (!this.elementChecked && this.widget) {
-      this.elementChecked = true;
-      this.dragService.add(this.widget);
-    }
+    // if (!this.elementChecked && this.widget) {
+    //   this.elementChecked = true;
+    //   this.dragService.add(this.widget);
+    // }
   }
 
   ngOnDestroy() {
@@ -119,13 +119,13 @@ export class NgxDragElementComponent implements OnInit, DoCheck, AfterViewInit, 
     pos.move.Y *= this.unitHeight;
     this.cdr.detectChanges();
 
-    let widgets_index = this.dragService.widgetsOverlappedWithOthers(this.dragService.Widgets);
-    this.createOverlapNotification(widgets_index);
+    let overlappedWidgets = this.dragService.widgetsOverlappedWithOthers();
+    this.createOverlapNotification(overlappedWidgets);
   }
 
-  private createOverlapNotification(widgets_index: Array<number>) {
-    for (let i = 0; i < this.dragService.Widgets.length; i++) {
-      this.dragService.Widgets[i].overlapped = widgets_index.includes(i) ? true : false;
+  private createOverlapNotification(overlappedWidgets: Array<{index: number, overlapped: boolean}>) {
+    for (let widget of overlappedWidgets) {
+      this.dragService.Widgets[widget.index].overlapped = widget.overlapped;
     }
   }
 }

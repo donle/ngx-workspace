@@ -5,10 +5,10 @@ import { NgxWorkspaceService } from './ngx-workspace.service';
 import { NgxWorkspaceDataService, DATA_TYPE } from './ngx-workspace-data.service';
 
 @Directive({
-  selector: '[widgetDraggable]'
+  selector: '[wsWidgetDraggable]'
 })
-export class NgxWidgetDraggableDirective {
-  @Input() public widgetDraggable: boolean;
+export class WsWidgetDraggableDirective {
+  @Input() public wsWidgetDraggable: boolean;
   @Input('ws-drag-scale') public draggableScale: { top: number, left: number, right: number, botton: number };
   @Input('ws-widget-profile') public widgetProfile: { widget: WidgetProfile, unitHeight: number };
   @Input('ws-widget-shadow') public widgetShadow: any;
@@ -31,7 +31,7 @@ export class NgxWidgetDraggableDirective {
   }
 
   @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
-    if (!this.widgetDraggable) return;
+    if (!this.wsWidgetDraggable) return;
 
     this.el.nativeElement.style.zIndex = 9999;
     this.el.nativeElement.style.borderLeft = 'thick solid #0000FF';
@@ -76,7 +76,7 @@ export class NgxWidgetDraggableDirective {
   }
 
   @HostListener('mousemove', ['$event']) onMouseMove(evt: MouseEvent) {
-    if (!this.widgetDraggable || !this.isMouseDown) return;
+    if (!this.wsWidgetDraggable || !this.isMouseDown) return;
 
     this.moveTo = {
       X: evt.clientX - this.lastPosition.X,
@@ -107,7 +107,7 @@ export class NgxWidgetDraggableDirective {
       this.widgetShadow.style.background = 'rgba(0, 21, 59, 0.3)';
     }
 
-    const board = document.querySelector('.drag-board');
+    const board = document.querySelector('.ngx-workspace-drag-board');
     const distanceToBottom = board.clientHeight - this.el.nativeElement.offsetHeight - this.el.nativeElement.offsetTop;
     if (-distanceToBottom >= this.widgetProfile.unitHeight / 2) this.dataService.sendMessage({
       type: DATA_TYPE.ASK_FOR_EXTENDING_WORKBOARD,
