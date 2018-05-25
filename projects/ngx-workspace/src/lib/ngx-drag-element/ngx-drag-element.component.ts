@@ -123,9 +123,9 @@ export class NgxDragElementComponent implements OnInit, DoCheck, AfterViewInit, 
     this.createOverlapNotification(overlappedWidgets);
   }
 
-  private createOverlapNotification(overlappedWidgets: Array<{index: number, overlapped: boolean}>) {
-    for (let widget of overlappedWidgets) {
-      this.dragService.Widgets[widget.index].overlapped = widget.overlapped;
+  private createOverlapNotification(overlappedWidgets: Array<boolean>) {
+    for (let i = 0; i < overlappedWidgets.length; i++) {
+      this.dragService.Widgets[i].overlapped = overlappedWidgets[i];
     }
   }
 }

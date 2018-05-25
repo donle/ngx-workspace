@@ -7,11 +7,14 @@ import {
   Input,
   OnInit,
   OnDestroy,
+  DoCheck,
   OnChanges,
   SimpleChanges,
   AfterContentInit,
   Output,
-  EventEmitter
+  EventEmitter,
+  KeyValueDiffers,
+  KeyValueDiffer
 } from '@angular/core';
 import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
@@ -23,9 +26,10 @@ import { NgxWorkspaceService } from '../ngx-workspace.service';
   templateUrl: './ngx-workboard.component.html',
   styleUrls: ['./ngx-workboard.component.scss']
 })
-export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy, AfterContentInit {
+export class NgxWorkboardComponent implements OnInit, AfterViewInit, DoCheck, OnChanges, OnDestroy, AfterContentInit {
   private workspaceResizeDetector: Erd;
   private enableEditMode: boolean;
+  private widgetsDiffer: Array<KeyValueDiffer<string, any>>;
 
   public unitHeight: number;
   public responsiveMode: boolean;
@@ -53,12 +57,14 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   constructor(
     private cdr: ChangeDetectorRef,
     private dataService: NgxWorkspaceDataService<any>,
-    private dragService: NgxWorkspaceService
+    private dragService: NgxWorkspaceService,
+    private widgetDiffers: KeyValueDiffers
   ) {
     this.unitHeight = 0;
     this.responsiveMode = true;
     this.enableResponsive = true;
     this.responsiveMinimalWidth = 0;
+    this.widgetsDiffer = [];
   }
 
   ngOnInit() {
@@ -82,7 +88,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
       else this.responsiveMode = this.enableResponsive;
     }
     if (changes.widgets) {
-      this.dragService.sync(this.widgets);
+      this.refreshWidgets();
     }
     if (changes.enableResponsive) {
       if (!this.enableResponsive) {
@@ -91,6 +97,18 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
       } else {
         this.boardElement.nativeElement.style.width = '100%';
         this.boardElement.nativeElement.style.overflow = null;
+      }
+    }
+  }
+
+  ngDoCheck () {
+    if (this.widgetsDiffer.length > 0 && this.widgets.length > 0) {
+      for (let i = 0; i < this.widgets.length; i++) {
+        const _diff = this.widgetsDiffer[i];
+        if (_diff.diff(this.widgets[i])) {
+          this.dragService.sync(this.widgets);
+          break;
+        }
       }
     }
   }
@@ -122,12 +140,24 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   ngAfterContentInit() {
-    this.dragService.add(this.widgets);
   }
 
   ngOnDestroy() {
     this.wsEditable = false;
     this.workspaceResizeDetector.removeAllListeners(this.boardElement.nativeElement);
+  }
+
+  private createWidgetsDiffListener () {
+    this.widgetsDiffer = [];
+    for (let widget of this.widgets) {
+      this.widgetsDiffer.push(this.widgetDiffers.find(widget).create());
+    }
+  }
+
+  private refreshWidgets () {
+    this.dragService.clear();
+    this.dragService.add(this.widgets);
+    this.createWidgetsDiffListener();
   }
 
   private onWindowResize() {

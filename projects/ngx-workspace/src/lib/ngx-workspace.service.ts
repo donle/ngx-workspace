@@ -25,9 +25,12 @@ export class NgxWorkspaceService {
   }
 
   public sync(widgets: Array<WidgetProfile>) {
-    this.widgets = this.widgets.filter(widget => widgets.find(newWidget => newWidget.name === widget.name));
-    const newWidgets = widgets.filter(newWidget => this.widgets.find(widget => widget.name !== newWidget.name));
-    this.widgets = this.widgets.concat(newWidgets);
+    for (let widget of widgets) {
+      const matchedIndex = this.widgets.findIndex(w => w.name === widget.name);
+      if (matchedIndex >= 0) {
+        this.widgets[matchedIndex] = widget;
+      }
+    }
   }
 
   public remove(widget: WidgetProfile) {
@@ -35,17 +38,15 @@ export class NgxWorkspaceService {
     if (index >= 0) this.widgets.splice(index, 1);
   }
 
+  public clear() {
+    this.widgets = [];
+  }
+
   public widgetsOverlappedWithOthers(widgets?: Array<WidgetProfile>) {
     widgets = widgets || this.widgets;
-    let occupiedWidgets: Array<{
-      index: number,
-      overlapped: boolean
-    }> = [];
+    let occupiedWidgets: Array<boolean> = [];
     for (let i = 0; i < widgets.length; i++) {
-      occupiedWidgets.push({
-        index: i,
-        overlapped: false
-      });
+      occupiedWidgets.push(false);
     }
 
     for (let i = 0; i < widgets.length; i++) {
@@ -73,12 +74,9 @@ export class NgxWorkspaceService {
           }
         };
 
-        const hoveredWidget = occupiedWidgets.find(widget => widget.index === j);
         if (this.isInsideAreaOf(destWidgetArea, srcWidgetArea)) {
-          occupiedWidgets.find(widget => widget.index === i).overlapped = true;
-          hoveredWidget.overlapped = true;
-        } else {
-          hoveredWidget.overlapped = false;
+          occupiedWidgets[i] = true;
+          occupiedWidgets[j] = true;
         }
       }
     }
