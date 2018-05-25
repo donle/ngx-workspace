@@ -8,10 +8,11 @@ import {
   MatRadioModule,
   MatSlideToggleModule,
   MatInputModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatTooltipModule
 } from '@angular/material';
-// import { NgxWorkspaceModule } from 'ngx-workspace';
-import { NgxWorkspaceModule } from '../../../dist/ngx-workspace';
+import { NgxWorkspaceModule } from 'ngx-workspace';
+// import { NgxWorkspaceModule } from '../../ngx-workspace';
 
 import { AppComponent } from './app.component';
 import { WidgetAComponent } from './widget-a/widget-a.component';
@@ -37,7 +38,8 @@ import { FormsModule } from '@angular/forms';
     MatRadioModule,
     MatSlideToggleModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],

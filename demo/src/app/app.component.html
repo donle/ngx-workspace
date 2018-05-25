@@ -1,13 +1,13 @@
-<nav class="header mat-elevation-z2" [ngStyle]="{ padding: '0 16px' }">
+<nav class="header mat-elevation-z2">
   <span class="title">Ngx-workspace Demo</span>
   <span class="spacer"></span>
-  <a mat-icon-button href="https://github.com/donle/ngx-workspace">
+  <a mat-icon-button href="https://github.com/donle/ngx-workspace" matTooltip="Github">
     <i class="fa fa-github" [style.fontSize.px]="24"></i>
   </a>
 </nav>
-<div class="layout border-box" [style.padding.px]="16">
-  <div class="flex8 border-box" [style.padding.px]="8">
-    <ngx-workboard [widgets]="displayWidgets" [responsive]="responsive" [responsive-scale]="responsiveScale" [edit]="editable"></ngx-workboard>
+<div class="main layout border-box" [style.padding.px]="16">
+  <div class="flex8 border-box" [class.overflow]="!responsive" [style.padding.px]="8">
+    <ngx-workboard [wsWidgets]="displayWidgets" [wsResponsive]="responsive" [wsResponsiveScale]="responsiveScale" [(wsEditable)]="editable"></ngx-workboard>
   </div>
   <div class="flex4 border-box" [style.padding.px]="8">
     <div class="layout wrap border-box options">

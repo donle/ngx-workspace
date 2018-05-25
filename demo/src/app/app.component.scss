@@ -1,13 +1,26 @@
 .header {
+    position: fixed;
     height: 56px;
     display: flex;
     align-items: center;
     background: #3f51b5;
     color: white;
+    width: 100%;
+    top: 0;
+    box-sizing: border-box;
+    padding: 0 16px;
+    z-index: 999;
     .title {
         font-weight: 500;
         font-size: 20px;
     }
+}
+.overflow {
+    overflow-x: auto;
+    overflow-y: initial;
+}
+.main {
+    margin-top: 56px;
 }
 .options {
     &>.flex12{
