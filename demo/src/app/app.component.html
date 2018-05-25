@@ -19,7 +19,21 @@
 
       <div class="flex12 layout wrap">
         <span class="flex12 widget-title" [style.padding.px]="8">Widgets</span>
-        <mat-checkbox class="flex4" *ngFor="let widget of widgetsControl" [(ngModel)]="widget.enabled" (change)="checkWidget($event)">{{widget.Title}}</mat-checkbox>
+        <div *ngFor="let widget of widgetsControl; index as i" class="layout wrap">
+          <mat-checkbox class="flex12" [(ngModel)]="widget.enabled" (change)="checkWidget($event)">{{widget.Title}}</mat-checkbox>
+          <mat-form-field class="flex6 border-box" [style.padding.px]="8">
+            <input matInput placeholder="Unit Height" type="number" [disabled]="!widget.enabled" [(ngModel)]="originalWidgets[i].unitHeight" />
+          </mat-form-field>
+          <mat-form-field class="flex6 border-box" [style.padding.px]="8">
+            <input matInput placeholder="Unit Wiidth" type="number" [disabled]="!widget.enabled" [(ngModel)]="originalWidgets[i].unitWidth" />
+          </mat-form-field>
+          <mat-form-field class="flex6 border-box" [style.padding.px]="8">
+            <input matInput placeholder="Top Offset" type="number" [disabled]="!widget.enabled" [(ngModel)]="originalWidgets[i].offsetLeftUnit" />
+          </mat-form-field>
+          <mat-form-field class="flex6 border-box" [style.padding.px]="8">
+            <input matInput placeholder="Left Offset" type="number" [disabled]="!widget.enabled" [(ngModel)]="originalWidgets[i].offsetTopUnit" />
+          </mat-form-field>
+        </div>
       </div>
     </div>
   </div>
