@@ -9,10 +9,11 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
-  AfterContentInit
+  AfterContentInit,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
-// const elementResizeDetectorMaker = require('element-resize-detector');
 import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
 import { WidgetProfile } from '../interfaces/widget';
 import { NgxWorkspaceService } from '../ngx-workspace.service';
@@ -24,6 +25,8 @@ import { NgxWorkspaceService } from '../ngx-workspace.service';
 })
 export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy, AfterContentInit {
   private workspaceResizeDetector: Erd;
+  private enableEditMode: boolean;
+
   public unitHeight: number;
   public responsiveMode: boolean;
   public dragScale: {
@@ -32,12 +35,21 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     top: number,
     bottom: number
   };
-  @Input('widgets') public widgets: Array<WidgetProfile>;
-  @Input('edit') public enableEditMode: boolean;
-  @Input('responsive') public enableResponsive: boolean;
-  @Input('responsive-scale') public responsiveMinimalWidth: number;
+  @Input('wsWidgets') public widgets: Array<WidgetProfile>;
+  @Input('wsResponsive') public enableResponsive: boolean;
+  @Input('wsResponsiveScale') public responsiveMinimalWidth: number;
+  @Input('wsEditable') public get wsEditable () {
+    return this.enableEditMode;
+  };
+  public set wsEditable (val) {
+    this.enableEditMode = val;
+    this.wsEditableChange.emit(this.enableEditMode);
+  }
+  @Output() public wsEditableChange = new EventEmitter<boolean>();
+
   @ViewChild('workboard') private boardElement: ElementRef;
   @ViewChild('background') private backgroundRef: ElementRef;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private dataService: NgxWorkspaceDataService<any>,
@@ -52,7 +64,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     this.dataService.currentMessage.subscribe(data => {
       switch (data.type) {
         case DATA_TYPE.ASK_FOR_EDIT_MODE: {
-          if (!this.enableEditMode) this.autoBoardHeight();
+          if (!this.wsEditable) this.autoBoardHeight();
           return;
         }
         case DATA_TYPE.ASK_FOR_EXTENDING_WORKBOARD: {
@@ -66,9 +78,19 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.responsiveMinimalWidth) {
       if (window.innerWidth < this.responsiveMinimalWidth) this.responsiveMode = false;
+      else this.responsiveMode = this.enableResponsive;
     }
     if (changes.widgets) {
       this.dragService.sync(this.widgets);
+    }
+    if (changes.enableResponsive) {
+      if (!this.enableResponsive) {
+        this.boardElement.nativeElement.style.width = (this.unitHeight * 12) + 'px';
+        this.boardElement.nativeElement.style.overflow = 'auto';
+      } else {
+        this.boardElement.nativeElement.style.width = '100%';
+        this.boardElement.nativeElement.style.overflow = null;
+      }
     }
   }
 
@@ -93,6 +115,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
 
     this.workspaceResizeDetector = elementResizeDetectorMaker();
     this.workspaceResizeDetector.listenTo(this.boardElement.nativeElement, element => {
+      if (!this.enableResponsive) return;
       this.onWindowResize();
     });
   }
@@ -102,14 +125,14 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   ngOnDestroy() {
-    this.enableEditMode = false;
+    this.wsEditable = false;
     this.workspaceResizeDetector.removeAllListeners(this.boardElement.nativeElement);
   }
 
   private onWindowResize() {
     if (window.innerWidth < this.responsiveMinimalWidth) {
       this.responsiveMode = false;
-      this.enableEditMode = false;
+      this.wsEditable = false;
     } else {
       this.responsiveMode = true;
     }

@@ -1,5 +1,5 @@
 <div class="ngx-workspace-drag-board" #workboard>
-  <ngx-drag-element *ngFor="let widget of widgets" [edit]="enableEditMode" [unit-height]="unitHeight" [widget]="widget" [drag-scale]="dragScale" [component]="widget.component" [responsive]="responsiveMode"></ngx-drag-element>
+  <ngx-drag-element *ngFor="let widget of widgets" [edit]="wsEditable" [unit-height]="unitHeight" [widget]="widget" [drag-scale]="dragScale" [component]="widget.component" [responsive]="responsiveMode"></ngx-drag-element>
   <!-- <ng-content></ng-content> -->
-  <div class="ngx-workspace-background-grid ngx-workspace-wrap ngx-workspace-row ngx-workspace-flex" #background [ngClass]="{ 'ngx-workspace-hide': !responsiveMode, 'ngx-workspace-transparent': !enableEditMode }"></div>
+  <div class="ngx-workspace-background-grid ngx-workspace-wrap ngx-workspace-row ngx-workspace-flex" #background [ngClass]="{ 'ngx-workspace-hide': !responsiveMode, 'ngx-workspace-transparent': !wsEditable }"></div>
 </div>
