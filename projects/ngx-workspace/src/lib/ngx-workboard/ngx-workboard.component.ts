@@ -75,7 +75,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   ngAfterViewInit() {
     if (window.innerWidth < this.responsiveMinimalWidth || !this.enableResponsive) this.responsiveMode = false;
 
-    this.unitHeight = this.boardElement.nativeElement.offsetWidth / 12;
+    this.unitHeight = (this.boardElement.nativeElement as Element).getBoundingClientRect().width / 12;
     this.dragScale = {
       left: this.boardElement.nativeElement.offsetLeft,
       right: this.boardElement.nativeElement.offsetWidth + this.boardElement.nativeElement.offsetLeft,
@@ -113,7 +113,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     } else {
       this.responsiveMode = true;
     }
-    const newHeight = this.boardElement.nativeElement.offsetWidth / 12;
+    const newHeight = (this.boardElement.nativeElement as Element).getBoundingClientRect().width / 12;
     if (newHeight !== this.unitHeight) {
       this.unitHeight = newHeight;
       this.autoBoardHeight();
