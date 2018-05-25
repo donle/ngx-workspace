@@ -40,7 +40,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
   @Input('wsResponsiveScale') public responsiveMinimalWidth: number;
   @Input('wsEditable') public get wsEditable () {
     return this.enableEditMode;
-  };
+  }
   public set wsEditable (val) {
     this.enableEditMode = val;
     this.wsEditableChange.emit(this.enableEditMode);
@@ -58,6 +58,7 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, OnChanges, 
     this.unitHeight = 0;
     this.responsiveMode = true;
     this.enableResponsive = true;
+    this.responsiveMinimalWidth = 0;
   }
 
   ngOnInit() {
