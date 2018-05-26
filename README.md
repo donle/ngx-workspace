@@ -8,6 +8,41 @@ Workspace is a whiteboard for users to customise the location of each widget/app
 
 # How to use
 
+In app module, import `NgxWorkspaceModule` into the project. Components imported into workspace should be declared in `entryComponents`.
+#### app.module.ts
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { NgxWorkspaceModule } from 'ngx-workspace';
+
+import { AppComponent } from './app.component';
+import { WidgetAComponent } from './widget-a/widget-a.component';
+import { WidgetBComponent } from './widget-b/widget-b.component';
+import { WidgetCComponent } from './widget-c/widget-c.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    WidgetAComponent,
+    WidgetBComponent,
+    WidgetCComponent
+  ],
+  imports: [
+    BrowserModule
+    NgxWorkspaceModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    WidgetAComponent,
+    WidgetBComponent,
+    WidgetCComponent
+  ]
+})
+export class AppModule { }
+
+```
+
 ##### app.component.html
 ```html
 <ngx-workboard [wsWidgets]="widgets" [wsResponsive]="responsive" [wsResponsiveScale]="responsiveScale" [wsEditable]="editable"></ngx-workboard>
