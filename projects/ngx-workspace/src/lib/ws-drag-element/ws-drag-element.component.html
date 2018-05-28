@@ -1,0 +1,7 @@
+<div class="ngx-workspace-drag-element" id="{{wsWidget.name}}" [ngStyle]="getWidgetStyle" [wsWidgetDraggable]="enableEditMode" [wsWidgetProfile]="getAppProfile(wsWidget)"
+ [wsWidgetShadow]="elementShadow" [wsDragScale]="dragScale" [ngClass]="{ 'ngx-workspace-editable': enableEditMode }" (wsWidgetPosition)="getPosition($event)"
+  #elementRef>
+  <div class="ngx-workspace-hover-shadow" [ngClass]="{ 'ngx-workspace-hide': !responsiveMode }"></div>
+  <div wsWorkspaceLoader></div>
+</div>
+<div class="ngx-workspace-shadow" [ngClass]="{ 'ngx-workspace-hide': !dragScale || !responsiveMode }" [ngStyle]="getWidgetStyle" #elementShadow></div>

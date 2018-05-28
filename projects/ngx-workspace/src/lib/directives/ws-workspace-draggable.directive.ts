@@ -1,18 +1,18 @@
 import { Directive, Input, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
-import { Point } from './interfaces/point';
-import { WidgetProfile } from './interfaces/widget';
-import { NgxWorkspaceService } from './ngx-workspace.service';
-import { NgxWorkspaceDataService, DATA_TYPE } from './ngx-workspace-data.service';
+import { Point } from '../interfaces/point';
+import { WidgetProfile } from '../interfaces/widget';
+import { WsWorkspaceService } from '../services/ws-workspace.service';
+import { WsWorkspaceDataService, DATA_TYPE } from '../services/ws-workspace-data.service';
 
 @Directive({
   selector: '[wsWidgetDraggable]'
 })
 export class WsWidgetDraggableDirective {
   @Input() public wsWidgetDraggable: boolean;
-  @Input('ws-drag-scale') public draggableScale: { top: number, left: number, right: number, botton: number };
-  @Input('ws-widget-profile') public widgetProfile: { widget: WidgetProfile, unitHeight: number };
-  @Input('ws-widget-shadow') public widgetShadow: any;
-  @Output('ws-widget-position') public widgetPosition: EventEmitter<{ move: Point, widgetName: string }>;
+  @Input('wsDragScale') public draggableScale: { top: number, left: number, right: number, botton: number };
+  @Input('wsWidgetProfile') public widgetProfile: { widget: WidgetProfile, unitHeight: number };
+  @Input('wsWidgetShadow') public widgetShadow: any;
+  @Output('wsWidgetPPosition') public widgetPosition: EventEmitter<{ move: Point, widgetName: string }>;
 
   private originalOffset: { left: number, top: number };
   private isMouseDown: boolean;
@@ -21,8 +21,8 @@ export class WsWidgetDraggableDirective {
 
   constructor(
     private el: ElementRef,
-    private dataService: NgxWorkspaceDataService<boolean>,
-    private dragService: NgxWorkspaceService
+    private dataService: WsWorkspaceDataService<boolean>,
+    private dragService: WsWorkspaceService
   ) {
     this.isMouseDown = false;
     this.lastPosition = null;

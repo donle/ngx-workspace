@@ -26,7 +26,7 @@
     "element-resize-detector": "^1.1.14",
     "font-awesome": "^4.7.0",
     "ngx-toastr": "^8.7.3",
-    "ngx-workspace": "^0.2.2",
+    "ngx-workspace": "^0.2.4",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

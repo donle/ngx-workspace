@@ -14,7 +14,7 @@ export interface DataModel<T> {
 }
 
 @Injectable()
-export class NgxWorkspaceDataService<T> {
+export class WsWorkspaceDataService<T> {
   private messageSource = new BehaviorSubject<DataModel<T>>({ type: null, payload: null });
   public readonly currentMessage: Observable<DataModel<T>> = this.messageSource.asObservable();
 

@@ -17,16 +17,16 @@ import {
   KeyValueDiffer
 } from '@angular/core';
 import elementResizeDetectorMaker, { Erd } from 'element-resize-detector';
-import { NgxWorkspaceDataService, DATA_TYPE } from '../ngx-workspace-data.service';
+import { WsWorkspaceDataService, DATA_TYPE } from '../services/ws-workspace-data.service';
 import { WidgetProfile } from '../interfaces/widget';
-import { NgxWorkspaceService } from '../ngx-workspace.service';
+import { WsWorkspaceService } from '../services/ws-workspace.service';
 
 @Component({
-  selector: 'ngx-workboard',
-  templateUrl: './ngx-workboard.component.html',
-  styleUrls: ['./ngx-workboard.component.scss']
+  selector: 'ws-workboard',
+  templateUrl: './ws-workboard.component.html',
+  styleUrls: ['./ws-workboard.component.scss']
 })
-export class NgxWorkboardComponent implements OnInit, AfterViewInit, DoCheck, OnChanges, OnDestroy, AfterContentInit {
+export class WsWorkboardComponent implements OnInit, AfterViewInit, DoCheck, OnChanges, OnDestroy, AfterContentInit {
   private workspaceResizeDetector: Erd;
   private enableEditMode: boolean;
   private widgetsDiffer: Array<KeyValueDiffer<string, any>>;
@@ -56,8 +56,8 @@ export class NgxWorkboardComponent implements OnInit, AfterViewInit, DoCheck, On
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private dataService: NgxWorkspaceDataService<any>,
-    private dragService: NgxWorkspaceService,
+    private dataService: WsWorkspaceDataService<any>,
+    private dragService: WsWorkspaceService,
     private widgetDiffers: KeyValueDiffers
   ) {
     this.unitHeight = 0;

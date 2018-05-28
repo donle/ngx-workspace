@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WidgetProfile, WidgetArea } from './interfaces/widget';
+import { WidgetProfile, WidgetArea } from '../interfaces/widget';
 @Injectable()
-export class NgxWorkspaceService {
+export class WsWorkspaceService {
   private widgets: Array<WidgetProfile>;
   constructor() {
     this.widgets = [];

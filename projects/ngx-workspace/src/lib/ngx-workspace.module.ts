@@ -1,29 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxDragElementComponent } from './ngx-drag-element/ngx-drag-element.component';
-import { NgxWorkboardComponent } from './ngx-workboard/ngx-workboard.component';
-import { NgxWorkspaceService } from './ngx-workspace.service';
-import { WsWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
-import { NgxWorkspaceDataService } from './ngx-workspace-data.service';
-import { NgxWidgetLoaderDirective } from './ngx-widget-loader.directive';
+import { WsDragElementComponent } from './ws-drag-element/ws-drag-element.component';
+import { WsWorkboardComponent } from './ws-workboard/ws-workboard.component';
+import { WsWorkspaceService } from './services/ws-workspace.service';
+import { WsWidgetDraggableDirective } from './directives/ws-workspace-draggable.directive';
+import { WsWorkspaceDataService } from './services/ws-workspace-data.service';
+import { WsWidgetLoaderDirective } from './directives/ws-widget-loader.directive';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    NgxDragElementComponent,
-    NgxWorkboardComponent,
+    WsDragElementComponent,
+    WsWorkboardComponent,
     WsWidgetDraggableDirective,
-    NgxWidgetLoaderDirective
+    WsWidgetLoaderDirective
   ],
   providers: [
-    NgxWorkspaceService,
-    NgxWorkspaceDataService
+    WsWorkspaceService,
+    WsWorkspaceDataService
   ],
   exports: [
-    NgxWorkboardComponent,
-    NgxDragElementComponent
+    WsWorkboardComponent,
+    WsDragElementComponent
   ]
 })
 export class NgxWorkspaceModule { }

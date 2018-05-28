@@ -1,4 +1,4 @@
-import { WsWidgetDraggableDirective } from './ngx-workspace-draggable.directive';
+import { WsWidgetDraggableDirective } from './ws-workspace-draggable.directive';
 import { inject, TestBed } from '@angular/core/testing';
 
 describe('WsWidgetDraggableDirective', () => {

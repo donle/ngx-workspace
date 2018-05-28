@@ -3996,9 +3996,9 @@ ngx-toastr@^8.7.3:
   dependencies:
     tslib "^1.9.0"
 
-ngx-workspace@^0.2.2:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/ngx-workspace/-/ngx-workspace-0.2.3.tgz#22bc3996e136385cae0f56ddf177b2aabd4da89e"
+ngx-workspace@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ngx-workspace/-/ngx-workspace-0.2.4.tgz#a16b80894dc99b4a2e98cf882d8ae1de759d0d60"
   dependencies:
     "@types/element-resize-detector" "^1.1.0"
     element-resize-detector "^1.1.14"

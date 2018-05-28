@@ -45,7 +45,7 @@ export class AppModule { }
 
 ##### app.component.html
 ```html
-<ngx-workboard [wsWidgets]="widgets" [wsResponsive]="responsive" [wsResponsiveScale]="responsiveScale" [wsEditable]="editable"></ngx-workboard>
+<ws-workboard [wsWidgets]="widgets" [wsResponsive]="responsive" [wsResponsiveScale]="responsiveScale" [wsEditable]="editable"></ws-workboard>
 ```
 
 ##### app.component.ts
